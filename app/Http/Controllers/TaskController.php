@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Task;
 
 class TaskController extends Controller
 {
     public function index(){
-        return view("tasks.index");
+        $tasks = Task::all();
+        return view("tasks.index",compact("tasks"));
     }
 
     public function create(){
@@ -16,5 +18,20 @@ class TaskController extends Controller
 
     public function view(){
         return view("tasks.view");
+    }
+    public function store(Request $request){
+        $request->validate([
+            "title" => "required",
+            "time" => "required",
+            "status" => "required",
+        ]);
+
+        $task = new Task();
+        $task->title = $request->title;
+        $task->time = $request->time;
+        $task->status = $request->status;
+        $task->description = $request->description;
+        $task->save();
+        return redirect()->route('index');
     }
 }
