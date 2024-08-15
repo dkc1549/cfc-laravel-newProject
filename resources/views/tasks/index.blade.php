@@ -20,9 +20,14 @@
                     <td>{{$task->time}}</td>
                     <td>{{$task->status}}</td>
                     <td>
-                        <a name="" id="" class="btn btn-primary" href="#" role="button">Edit</a>
-                        <a name="" id="" class="btn btn-success" href="#" role="button">View</a>
-                        <a name="" id="" class="btn btn-danger" href="#" role="button">Delete</a>
+                        <a name="" id="" class="btn btn-primary" href="{{route('edit',$task->id)}}" role="button">Edit</a>
+                        <a name="" id="" class="btn btn-success" href="{{route('view',$task->id)}}" role="button">View</a>
+                        {{-- <a name="" id="" class="btn btn-danger" href="#" role="button">Delete</a> --}}
+                        <form action="{{route('delete',$task->id)}}" class="d-inline-block" onsubmit="return confirm('Are you sure?')" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
 
                     </td>
                 </tr> 
